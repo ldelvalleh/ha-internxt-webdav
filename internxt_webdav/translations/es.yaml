@@ -1,31 +1,24 @@
 configuration:
   email:
-    name: Correo electrÃ³nico de Internxt
-    description: Correo asociado a la cuenta de Internxt.
+    name: "Correo electr\u00f3nico de Internxt"
+    description: "Correo asociado a la cuenta de Internxt."
   password:
-    name: ContraseÃ±a de Internxt
-    description: ContraseÃ±a de la cuenta de Internxt.
+    name: "Contrase\u00f1a de Internxt"
+    description: "Contrase\u00f1a de la cuenta de Internxt."
   two_factor_code:
-    name: CÃ³digo 2FA temporal
-    description: >-
-      CÃ³digo actual de seis cifras. Debe actualizarse cada vez que se reinicia
-      la aplicaciÃ³n, salvo que se configure un secreto OTP.
+    name: "C\u00f3digo 2FA temporal"
+    description: "C\u00f3digo actual de seis cifras. Debe actualizarse cada vez que se reinicia la aplicaci\u00f3n, salvo que se configure un secreto OTP."
   otp_secret:
-    name: Secreto OTP
-    description: >-
-      Secreto base32 que permite generar automÃ¡ticamente cÃ³digos 2FA. Es
-      informaciÃ³n extremadamente sensible.
+    name: "Secreto OTP"
+    description: "Secreto base32 que permite generar autom\u00e1ticamente c\u00f3digos 2FA. Es informaci\u00f3n extremadamente sensible."
   webdav_username:
-    name: Usuario WebDAV local
-    description: >-
-      Usuario independiente utilizado por Home Assistant para acceder al
-      servidor WebDAV dentro de la red local.
+    name: "Usuario WebDAV local"
+    description: "Usuario independiente utilizado por Home Assistant para acceder al servidor WebDAV dentro de la red local."
   webdav_password:
-    name: ContraseÃ±a WebDAV local
-    description: >-
-      ContraseÃ±a independiente y robusta para proteger WebDAV en la red local.
+    name: "Contrase\u00f1a WebDAV local"
+    description: "Contrase\u00f1a independiente y robusta para proteger WebDAV en la red local."
   protocol:
-    name: Protocolo WebDAV
-    description: Utiliza HTTPS salvo durante pruebas internas controladas.
+    name: "Protocolo WebDAV"
+    description: "Utiliza HTTPS salvo durante pruebas internas controladas."
 network:
-  3005/TCP: Servidor WebDAV local autenticado de Internxt
+  3005/TCP: "Servidor WebDAV local autenticado de Internxt"

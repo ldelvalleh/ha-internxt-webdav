@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.2
+
+- Corrected Spanish translation encoding.
+- Added complete English and Spanish documentation.
+
 ## 0.0.1
 
 - First experimental spike.
