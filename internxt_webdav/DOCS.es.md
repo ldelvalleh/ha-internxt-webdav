@@ -4,7 +4,7 @@
 
 ## Antes de comenzar
 
-Esta es una versión experimental `0.0.3` para Home Assistant OS. Utiliza una
+Esta es una versión experimental `0.0.4` para Home Assistant OS. Utiliza una
 cuenta de Internxt destinada a desarrollo. No uses una cuenta principal hasta
 que la aplicación haya superado una revisión de seguridad y las pruebas de
 compatibilidad con copias de seguridad.

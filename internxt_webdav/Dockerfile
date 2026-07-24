@@ -17,6 +17,17 @@ ENV HOME="/data" \
     XDG_CACHE_HOME="/data/.cache" \
     XDG_CONFIG_HOME="/data/.config"
 
+# Internxt v1.6.7 resolves its CLI directory with os.homedir(), which reads the
+# Unix account database, while its Docker entrypoint also contains a literal
+# /root/.internxt-cli path. Point both mechanisms at Home Assistant's writable
+# and persistent /data mount without altering the upstream entrypoint.
+RUN sed -i \
+      's#^\(root:[^:]*:[^:]*:[^:]*:[^:]*:\)/root:#\1/data:#' \
+      /etc/passwd \
+    && test "$(awk -F: '$1 == "root" { print $6 }' /etc/passwd)" = "/data" \
+    && test ! -e /root/.internxt-cli \
+    && ln -s /data/.internxt-cli /root/.internxt-cli
+
 COPY rootfs /
 
 RUN chmod 0755 /usr/local/bin/ha-entrypoint.mjs
