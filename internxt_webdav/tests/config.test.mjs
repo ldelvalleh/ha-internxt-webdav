@@ -4,6 +4,8 @@ import {
   buildEnvironment,
   ConfigurationError,
   createRedactionTransform,
+  prepareRuntimeDirectories,
+  RUNTIME_DIRECTORIES,
   sensitiveValues,
 } from "../rootfs/usr/local/lib/internxt-ha/config.mjs";
 
@@ -18,9 +20,15 @@ const completeOptions = {
 };
 
 test("maps Home Assistant options to the official Internxt environment", () => {
-  const environment = buildEnvironment(completeOptions, { PATH: "/bin" });
+  const environment = buildEnvironment(completeOptions, {
+    HOME: "/root",
+    PATH: "/bin",
+  });
 
   assert.equal(environment.PATH, "/bin");
+  assert.equal(environment.HOME, "/data");
+  assert.equal(environment.XDG_CACHE_HOME, "/data/.cache");
+  assert.equal(environment.XDG_CONFIG_HOME, "/data/.config");
   assert.equal(environment.INXT_USER, completeOptions.email);
   assert.equal(environment.INXT_PASSWORD, completeOptions.password);
   assert.equal(environment.INXT_TWOFACTORCODE, "123456");
@@ -31,6 +39,23 @@ test("maps Home Assistant options to the official Internxt environment", () => {
   assert.equal(environment.WEBDAV_USERNAME, "homeassistant");
   assert.equal(environment.WEBDAV_PASSWORD, "local-webdav-password");
   assert.equal(environment.WEBDAV_KEEPALIVE_ENABLED, "true");
+});
+
+test("prepares all writable runtime directories below /data", async () => {
+  const calls = [];
+
+  await prepareRuntimeDirectories(RUNTIME_DIRECTORIES, async (...args) => {
+    calls.push(args);
+  });
+
+  assert.deepEqual(
+    calls,
+    RUNTIME_DIRECTORIES.map((directory) => [directory, { recursive: true }]),
+  );
+  assert.equal(
+    RUNTIME_DIRECTORIES.every((directory) => directory.startsWith("/data/")),
+    true,
+  );
 });
 
 test("uses empty optional 2FA values and the default protocol", () => {

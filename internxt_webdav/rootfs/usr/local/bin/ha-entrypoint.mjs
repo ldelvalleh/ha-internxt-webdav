@@ -6,6 +6,7 @@ import {
   buildEnvironment,
   ConfigurationError,
   createRedactionTransform,
+  prepareRuntimeDirectories,
   sensitiveValues,
 } from "../lib/internxt-ha/config.mjs";
 
@@ -32,6 +33,13 @@ try {
   }
 
   console.error("[Internxt] Unexpected configuration error.");
+  process.exit(78);
+}
+
+try {
+  await prepareRuntimeDirectories();
+} catch {
+  console.error("[Internxt] Unable to prepare persistent runtime directories.");
   process.exit(78);
 }
 
