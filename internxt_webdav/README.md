@@ -1,5 +1,7 @@
 # Internxt WebDAV
 
+[English](README.md) | [Español](README.es.md)
+
 Experimental Home Assistant OS app that starts the official Internxt WebDAV
 container with configuration supplied through the Home Assistant interface.
 

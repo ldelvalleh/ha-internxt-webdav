@@ -1,5 +1,7 @@
 # Internxt WebDAV for Home Assistant
 
+[English](README.md) | [Español](README.es.md)
+
 Experimental Home Assistant OS app that runs the official
 [`internxt/webdav`](https://hub.docker.com/r/internxt/webdav) image and adapts
 Home Assistant's visual configuration to the environment variables expected by
@@ -15,7 +17,7 @@ until the 0.1.0 acceptance tests have passed.
 
 ## Spike status
 
-Version `0.0.1` has a deliberately narrow goal:
+Version `0.0.2` has a deliberately narrow goal:
 
 1. Install on Home Assistant OS.
 2. Start the official Internxt WebDAV server.

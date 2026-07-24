@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/apps/configuration
 name: "Internxt WebDAV (experimental)"
-version: "0.0.1"
+version: "0.0.2"
 slug: "internxt_webdav"
 description: >-
   Experimental adapter for the official Internxt WebDAV server, intended for
