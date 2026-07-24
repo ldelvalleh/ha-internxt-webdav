@@ -1,0 +1,31 @@
+configuration:
+  email:
+    name: Internxt email
+    description: Email address associated with the Internxt account.
+  password:
+    name: Internxt password
+    description: Password for the Internxt account.
+  two_factor_code:
+    name: Temporary 2FA code
+    description: >-
+      Current six-digit code. It must be updated after every app restart unless
+      an OTP secret is configured.
+  otp_secret:
+    name: OTP secret
+    description: >-
+      Base32 secret used to generate 2FA codes automatically. This information
+      is extremely sensitive.
+  webdav_username:
+    name: Local WebDAV username
+    description: >-
+      Separate username used by Home Assistant to access WebDAV on the local
+      network.
+  webdav_password:
+    name: Local WebDAV password
+    description: >-
+      Separate strong password used to protect WebDAV on the local network.
+  protocol:
+    name: WebDAV protocol
+    description: Use HTTPS except during controlled internal testing.
+network:
+  3005/TCP: Authenticated local Internxt WebDAV server

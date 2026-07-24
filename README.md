@@ -1,42 +1,55 @@
-# Example Home Assistant app repository
+# Internxt WebDAV for Home Assistant
 
-This repository can be used as a "blueprint" for app development to help you get started.
+Experimental Home Assistant OS app that runs the official
+[`internxt/webdav`](https://hub.docker.com/r/internxt/webdav) image and adapts
+Home Assistant's visual configuration to the environment variables expected by
+Internxt.
 
-Apps documentation: <https://developers.home-assistant.io/docs/apps>
+The project is intended to make Internxt Drive usable as a WebDAV backup
+location for Home Assistant. Backup compatibility is not considered proven
+until the 0.1.0 acceptance tests have passed.
 
-[![Open your Home Assistant instance and show the app store with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_store.svg)](https://my.home-assistant.io/redirect/supervisor_store/?repository_url=https%3A%2F%2Fgithub.com%2Fhome-assistant%2Fapps-example)
+> [!WARNING]
+> This is experimental community software. It is not an official Internxt or
+> Home Assistant project and is not endorsed by either organization.
 
-## Apps
+## Spike status
 
-This repository contains the following apps
+Version `0.0.1` has a deliberately narrow goal:
 
-### [Example app](./example)
+1. Install on Home Assistant OS.
+2. Start the official Internxt WebDAV server.
+3. Answer an authenticated `PROPFIND`.
+4. Upload and retrieve a test file.
+5. Continue working after an app restart.
 
-![Supports aarch64 Architecture][aarch64-shield]
-![Supports amd64 Architecture][amd64-shield]
+Supported architectures:
 
-_Example app to use as a blueprint for new apps._
+- `amd64`
+- `aarch64`
 
-<!--
+The app pins `internxt/webdav:v1.6.7`; it does not implement encryption,
+WebDAV, or Internxt uploads itself.
 
-Notes to developers after forking or using the github template feature:
-- While developing comment out the 'image' key from 'example/config.yaml' to make the supervisor build the app locally.
-  - Remember to put this back when pushing up your changes.
-- When you merge to the 'main' branch of your repository a new build will be triggered.
-  - Make sure you adjust the 'version' key in 'example/config.yaml' when you do that.
-  - Make sure you update 'example/CHANGELOG.md' when you do that.
-  - The first time this runs you might need to adjust the image configuration on github container registry to make it public.
-  - You may also need to adjust the GitHub Actions configuration (Settings > Actions > General > Workflow > Read & Write).
-- Update the repository check in '.github/workflows/build-app.yaml' to match your repository name
-  (the 'github.repository' condition in the 'prepare' job).
-- Adjust the 'image' key in 'example/config.yaml' so it points to your username instead of 'home-assistant'
-  (e.g., 'ghcr.io/my-username/my-app').
-- Rename the example directory.
-  - The 'slug' key in 'example/config.yaml' should match the directory name.
-- Adjust all keys/urls that point to 'home-assistant' to now point to your user/fork.
-- Share your repository on the forums https://community.home-assistant.io/c/projects/9
-- Do awesome stuff!
- -->
+## Installation
 
-[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+Add this repository to the Home Assistant app store:
+
+```text
+https://github.com/ldelvalleh/ha-internxt-webdav
+```
+
+Detailed setup, testing, 2FA, and security instructions are in
+[`internxt_webdav/DOCS.md`](internxt_webdav/DOCS.md).
+
+## Security
+
+- WebDAV requires separate local credentials.
+- Port 3005 is intended for the trusted local network only.
+- Never forward port 3005 from a router.
+- Use a dedicated Internxt development account while this app is experimental.
+- Treat the Internxt password and OTP secret as account credentials.
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE).
