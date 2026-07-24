@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.4
+
+- Changed the Unix home directory for the container user to `/data`, matching
+  how the official Internxt CLI resolves its state directory.
+- Added a compatibility link from the upstream hard-coded
+  `/root/.internxt-cli` path to persistent storage at `/data/.internxt-cli`.
+
 ## 0.0.3
 
 - Redirected the Internxt CLI home, logs, cache, configuration, and PM2 state
