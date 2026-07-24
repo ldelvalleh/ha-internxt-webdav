@@ -1,4 +1,4 @@
-# https://developers.home-assistant.io/docs/apps/repository#repository-configuration
-name: Example Home Assistant app repository
-url: 'https://github.com/home-assistant/apps-example'
-maintainer: Awesome Maintainer <awesome@example.com>
+# https://developers.home-assistant.io/docs/apps/repository
+name: Internxt for Home Assistant
+url: "https://github.com/ldelvalleh/ha-internxt-webdav"
+maintainer: Luis <ldelvalleh@gmail.com>
