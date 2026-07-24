@@ -1,6 +1,14 @@
 import { Transform } from "node:stream";
+import { mkdir } from "node:fs/promises";
 
 export class ConfigurationError extends Error {}
+
+export const RUNTIME_DIRECTORIES = [
+  "/data/.internxt-cli/logs",
+  "/data/.cache",
+  "/data/.config",
+  "/data/.pm2",
+];
 
 function requiredString(value, field) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -23,6 +31,9 @@ export function buildEnvironment(options, baseEnvironment = {}) {
 
   return {
     ...baseEnvironment,
+    HOME: "/data",
+    XDG_CACHE_HOME: "/data/.cache",
+    XDG_CONFIG_HOME: "/data/.config",
     INXT_USER: requiredString(options.email, "email"),
     INXT_PASSWORD: requiredString(options.password, "password"),
     INXT_TWOFACTORCODE: optionalString(options.two_factor_code),
@@ -34,6 +45,15 @@ export function buildEnvironment(options, baseEnvironment = {}) {
     WEBDAV_PASSWORD: requiredString(options.webdav_password, "webdav_password"),
     WEBDAV_KEEPALIVE_ENABLED: "true",
   };
+}
+
+export async function prepareRuntimeDirectories(
+  directories = RUNTIME_DIRECTORIES,
+  mkdirImplementation = mkdir,
+) {
+  for (const directory of directories) {
+    await mkdirImplementation(directory, { recursive: true });
+  }
 }
 
 export function sensitiveValues(options) {

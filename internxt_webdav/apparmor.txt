@@ -36,10 +36,8 @@ profile internxt_webdav flags=(attach_disconnected,mediate_deleted) {
   /dev/random r,
   /dev/urandom r,
 
+  /data/ rw,
   /data/** rwk,
   /tmp/** rwk,
   /run/** rwk,
-  /root/.internxt-cli/** rwk,
-  /root/.pm2/** rwk,
-  /root/.cache/** rwk,
 }

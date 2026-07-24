@@ -13,6 +13,10 @@ LABEL \
   org.opencontainers.image.source="https://github.com/ldelvalleh/ha-internxt-webdav" \
   org.opencontainers.image.licenses="Apache-2.0"
 
+ENV HOME="/data" \
+    XDG_CACHE_HOME="/data/.cache" \
+    XDG_CONFIG_HOME="/data/.config"
+
 COPY rootfs /
 
 RUN chmod 0755 /usr/local/bin/ha-entrypoint.mjs

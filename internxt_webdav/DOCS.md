@@ -4,7 +4,7 @@
 
 ## Before you begin
 
-This is a `0.0.2` experimental spike for Home Assistant OS. Use a dedicated
+This is a `0.0.3` experimental spike for Home Assistant OS. Use a dedicated
 Internxt development account. Do not use a primary account until the app has
 completed a security review and the backup compatibility tests.
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.3
+
+- Redirected the Internxt CLI home, logs, cache, configuration, and PM2 state
+  from the protected `/root` directory to persistent app storage under `/data`.
+- Added startup preparation and regression tests for the writable runtime
+  directories.
+
 ## 0.0.2
 
 - Corrected Spanish translation encoding.
