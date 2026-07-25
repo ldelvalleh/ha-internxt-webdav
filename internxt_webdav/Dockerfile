@@ -28,6 +28,15 @@ RUN sed -i \
     && test ! -e /root/.internxt-cli \
     && ln -s /data/.internxt-cli /root/.internxt-cli
 
+# Abort the build if the pinned upstream upload implementation has drifted.
+RUN echo "4636f82c0b34fc85acbfa886c72b42196861a94f4576a9535e09f366f4d539d5  /app/node_modules/@internxt/inxt-js/build/lib/core/upload/multipart.js" \
+      | sha256sum --check --strict -
+
+# Keep Internxt's encryption and WebDAV implementation intact. This targeted
+# transport patch only lowers multipart concurrency and retries transient part
+# connections for large Home Assistant backups.
+COPY patches/multipart.js \
+     /app/node_modules/@internxt/inxt-js/build/lib/core/upload/multipart.js
 COPY rootfs /
 
 RUN chmod 0755 /usr/local/bin/ha-entrypoint.mjs

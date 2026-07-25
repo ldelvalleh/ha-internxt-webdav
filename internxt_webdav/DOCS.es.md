@@ -4,7 +4,7 @@
 
 ## Antes de comenzar
 
-Esta es una versión experimental `0.0.4` para Home Assistant OS. Utiliza una
+Esta es una versión experimental `0.0.5` para Home Assistant OS. Utiliza una
 cuenta de Internxt destinada a desarrollo. No uses una cuenta principal hasta
 que la aplicación haya superado una revisión de seguridad y las pruebas de
 compatibilidad con copias de seguridad.
@@ -131,9 +131,10 @@ de confiar en WebDAV.
 - **Puerto no disponible:** revisa el puerto publicado en la sección **Red**.
 - **Sin Internet:** el proceso oficial comprueba la sesión y WebDAV cada 30
   segundos e intenta recuperarlos.
-- **Fallo con archivos grandes:** reproduce primero el problema con un archivo
-  pequeño y conserva los registros después de eliminar cualquier dato
-  personal.
+- **Fallo con archivos grandes:** la versión 0.0.5 limita la concurrencia de las
+  partes y reintenta conexiones transitorias. Conserva los registros de Home
+  Assistant y de la aplicación, sin datos personales, si se agotan todos los
+  reintentos.
 
 ## Advertencias de seguridad
 

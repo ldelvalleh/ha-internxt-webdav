@@ -17,7 +17,7 @@ hasta superar las pruebas de aceptación de la versión 0.1.0.
 
 ## Estado del spike
 
-La versión `0.0.4` tiene un objetivo deliberadamente limitado:
+La versión `0.0.5` tiene un objetivo deliberadamente limitado:
 
 1. Instalarse en Home Assistant OS.
 2. Arrancar el servidor WebDAV oficial de Internxt.
