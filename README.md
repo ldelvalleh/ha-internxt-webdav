@@ -17,7 +17,7 @@ until the 0.1.0 acceptance tests have passed.
 
 ## Spike status
 
-Version `0.0.4` has a deliberately narrow goal:
+Version `0.0.5` has a deliberately narrow goal:
 
 1. Install on Home Assistant OS.
 2. Start the official Internxt WebDAV server.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.5
+
+- Reduced large multipart uploads from ten to three simultaneous 15 MB parts.
+- Added bounded retries for transient network failures during multipart uploads.
+- Verified a 915.96 MB synthetic upload and subsequent deletion.
+- Made the image build fail safely if the pinned Internxt v1.6.7 upload source
+  changes.
+
 ## 0.0.4
 
 - Changed the Unix home directory for the container user to `/data`, matching

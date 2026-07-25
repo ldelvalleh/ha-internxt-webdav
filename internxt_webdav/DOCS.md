@@ -4,7 +4,7 @@
 
 ## Before you begin
 
-This is a `0.0.4` experimental spike for Home Assistant OS. Use a dedicated
+This is a `0.0.5` experimental spike for Home Assistant OS. Use a dedicated
 Internxt development account. Do not use a primary account until the app has
 completed a security review and the backup compatibility tests.
 
@@ -126,8 +126,9 @@ emergency kit, and verify both upload and download before relying on WebDAV.
 - **Port unavailable:** check the published port in the app's Network section.
 - **No Internet:** the official process retries session and WebDAV health every
   30 seconds.
-- **Large upload failure:** reproduce first with a small file and retain both
-  Home Assistant and app logs after redacting personal data.
+- **Large upload failure:** version 0.0.5 limits multipart concurrency and
+  retries transient part connections. Retain both Home Assistant and app logs
+  after redacting personal data if all retry attempts are exhausted.
 
 ## Security warnings
 
