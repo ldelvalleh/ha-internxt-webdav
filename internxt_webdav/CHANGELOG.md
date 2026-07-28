@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0
+
+First stable release.
+
+- Reliable large backups: multipart uploads run three 15 MB parts at a time with
+  bounded retries for transient network errors, so a single dropped connection no
+  longer aborts a whole backup.
+- Built on the official `internxt/webdav:v1.6.7` image; the build fails safely if
+  the upstream upload source changes.
+- Complete Home Assistant setup guide in English and Spanish, including the WebDAV
+  integration and backup location.
+- Persistent Internxt CLI state under `/data`, sensitive-value redaction in the
+  logs, and a health check that never prints the account email.
+- Supports `amd64` and `aarch64`.
+
 ## 0.0.5
 
 - Reduced large multipart uploads from ten to three simultaneous 15 MB parts.

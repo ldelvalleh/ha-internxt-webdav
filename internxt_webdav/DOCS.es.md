@@ -1,146 +1,104 @@
-# Documentación de Internxt WebDAV
+# Internxt WebDAV — documentación
 
 [English](DOCS.md) | [Español](DOCS.es.md)
 
-## Antes de comenzar
+Usa **Internxt Drive** como ubicación de copias de seguridad de Home Assistant.
+Esta aplicación ejecuta el servidor oficial `internxt/webdav:v1.6.7` dentro de
+Home Assistant y lo expone a la integración **WebDAV** nativa.
 
-Esta es una versión experimental `0.0.5` para Home Assistant OS. Utiliza una
-cuenta de Internxt destinada a desarrollo. No uses una cuenta principal hasta
-que la aplicación haya superado una revisión de seguridad y las pruebas de
-compatibilidad con copias de seguridad.
+## Antes de empezar
 
-La aplicación utiliza la imagen oficial `internxt/webdav:v1.6.7`. El cifrado,
-descifrado, las subidas y las descargas permanecen íntegramente dentro del
-software de Internxt.
+Todo el cifrado, descifrado, subidas y descargas ocurren dentro del propio
+software de Internxt. Esta aplicación solo lo integra en Home Assistant y hace
+que las subidas grandes sean fiables (menos concurrencia multipart + reintentos
+automáticos).
 
-## Instalación
+La sesión de Internxt se guarda en la configuración de la aplicación y **queda
+incluida dentro de las copias completas** de Home Assistant. Por eso, usa una
+contraseña **fuerte y única** para tu cuenta de Internxt, que no reutilices en
+ningún otro sitio. Si quieres aislarla más, usa una cuenta de Internxt dedicada.
+
+## 1. Instalación
 
 1. Abre **Ajustes → Aplicaciones → Tienda de aplicaciones**.
-2. Abre el menú de tres puntos y selecciona **Repositorios**.
+2. Abre el menú **⋯** y elige **Repositorios**.
 3. Añade:
 
    ```text
    https://github.com/ldelvalleh/ha-internxt-webdav
    ```
 
-4. Actualiza la tienda e instala **Internxt WebDAV (experimental)**.
+4. Actualiza la tienda e instala **Internxt WebDAV**.
 
-Para desarrollo local, copia `internxt_webdav` en `/addons/internxt_webdav`,
-comenta la línea `image` de `config.yaml` y actualiza la tienda.
+## 2. Configuración
 
-## Configuración
+| Opción | Qué poner |
+| --- | --- |
+| **Correo y contraseña de Internxt** | Las credenciales de tu cuenta de Internxt. |
+| **Código 2FA temporal** | Solo si tu cuenta tiene 2FA y no has puesto un secreto OTP. Caduca y hay que sustituirlo tras cada reinicio. |
+| **Secreto OTP** | Secreto base32 para que Internxt genere los códigos 2FA solo (recomendado para funcionamiento desatendido). Protégelo como la contraseña. |
+| **Usuario y contraseña WebDAV locales** | Credenciales que te inventas aquí, usadas solo entre Home Assistant y esta aplicación. **No son las de Internxt.** |
+| **Protocolo** | Déjalo en **HTTPS**. HTTP solo para diagnóstico en entornos aislados. |
 
-- **Correo y contraseña de Internxt:** credenciales de la cuenta de desarrollo.
-- **Código 2FA temporal:** código actual; caduca y debe sustituirse después de
-  cada reinicio.
-- **Secreto OTP:** secreto base32 que permite a Internxt generar nuevos códigos
-  2FA. Es la opción recomendada para funcionamiento desatendido y debe
-  protegerse como la contraseña de la cuenta.
-- **Usuario y contraseña WebDAV locales:** credenciales independientes que solo
-  se utilizan entre los clientes WebDAV y esta aplicación. No son las
-  credenciales de Internxt.
-- **Protocolo:** utiliza HTTPS. HTTP se reserva para diagnóstico en entornos
-  aislados.
-
-Cuando se configuran los dos métodos 2FA, el proceso oficial de Internxt da
-prioridad al secreto OTP.
-
-El puerto interno siempre es 3005. Si fuera necesario, cambia únicamente el
-puerto publicado desde la sección **Red** de la aplicación.
-
-## Arranque y comprobación inicial
-
-Inicia la aplicación y revisa sus registros. Las credenciales y los
-identificadores de cuenta no deben aparecer; cualquier coincidencia debe verse
-como `[REDACTED]`.
-
-En otro equipo de la misma red de confianza, define:
-
-```sh
-HA_URL="https://IP_DE_HOME_ASSISTANT:3005"
-WEBDAV_USER="usuario-webdav-local"
-WEBDAV_PASSWORD="contraseña-webdav-local"
-```
-
-El certificado HTTPS es autofirmado. La opción `-k` solo debe utilizarse para
-esta prueba local de compatibilidad.
-
-```sh
-curl -k -i -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \
-  -X PROPFIND -H "Depth: 1" "$HA_URL/"
-```
-
-El resultado esperado es `HTTP/1.1 207 Multi-Status`.
-
-Comprueba también que una petición sin autenticación sea rechazada:
-
-```sh
-curl -k -i -X PROPFIND -H "Depth: 1" "$HA_URL/"
-```
-
-Crea una carpeta y sube un archivo:
-
-```sh
-curl -k -i -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \
-  -X MKCOL "$HA_URL/HomeAssistantTest"
-
-printf 'prueba\n' > prueba.txt
-curl -k -i -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \
-  -X PUT --data-binary @prueba.txt \
-  "$HA_URL/HomeAssistantTest/prueba.txt"
-```
-
-Descarga y elimina el archivo:
-
-```sh
-curl -k -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \
-  "$HA_URL/HomeAssistantTest/prueba.txt"
-
-curl -k -i -u "$WEBDAV_USER:$WEBDAV_PASSWORD" \
-  -X DELETE "$HA_URL/HomeAssistantTest/prueba.txt"
-```
-
-Confirma que el archivo aparece en Internxt Drive. Después reinicia la
-aplicación y repite `PROPFIND`.
+Arranca la aplicación y revisa su registro. Tu correo y tus credenciales deben
+aparecer únicamente como `[REDACTED]`. El puerto interno siempre es **3005**; se
+recomienda activar el **Watchdog** del complemento para que una sesión caducada
+se recupere sola.
 
 ## Integración WebDAV de Home Assistant
 
-La compatibilidad con copias sigue sin estar confirmada en esta versión, pero
-la configuración prevista es:
+Con la aplicación en marcha, conecta la integración WebDAV nativa de Home
+Assistant.
 
-- URL: `https://IP_DE_HOME_ASSISTANT:3005`
-- Usuario: usuario WebDAV local configurado en la aplicación
-- Contraseña: contraseña WebDAV local configurada en la aplicación
-- Ruta de copias: una carpeta `HomeAssistant` creada previamente
-- Verificar SSL: desactivado, debido al certificado local autofirmado
+1. Ve a **Ajustes → Dispositivos y servicios**.
+2. Pulsa **Añadir integración** (abajo a la derecha) y busca **WebDAV**.
+3. Rellena el diálogo:
+   - **URL**: `https://<IP_DE_HOME_ASSISTANT>:3005` — usa la IP de tu Home Assistant; el puerto siempre es `3005`. (Si cambiaste el protocolo a HTTP para pruebas locales, usa `http://`.)
+   - **Usuario**: el **usuario WebDAV local** que pusiste en la aplicación (no tu correo de Internxt).
+   - **Contraseña**: la **contraseña WebDAV local** que pusiste en la aplicación.
+   - **Verificar certificado SSL**: **desactívalo**. La aplicación usa un certificado local autofirmado, así que la verificación fallaría.
+   - **Ruta** (si la pide): `/HomeAssistant` — la carpeta donde vivirán tus copias. Se crea automáticamente si no existe.
+4. Pulsa **Enviar**. Home Assistant confirma la conexión y añade una entrada WebDAV.
 
-Crea inicialmente una copia manual pequeña con datos no esenciales. Conserva
-el almacenamiento local como segundo destino, mantén el cifrado de las copias,
-guarda el kit de emergencia y comprueba tanto la subida como la descarga antes
-de confiar en WebDAV.
+## Elegir Internxt como ubicación de copias
+
+1. Ve a **Ajustes → Sistema → Copias de seguridad**.
+2. Abre el menú de ubicaciones (**⋯**, arriba a la derecha) → **Añadir ubicación** → selecciona la ubicación **WebDAV** que acabas de crear.
+3. Deja también una copia **local** como segunda ubicación: no lo fíes todo a una sola copia.
+4. Mantén el **cifrado de las copias** activado y guarda el kit de emergencia /
+   la clave de cifrado **fuera** de Home Assistant. Sin ella, una copia no se
+   puede restaurar.
+
+## Crea tu primera copia
+
+1. En **Ajustes → Sistema → Copias de seguridad**, pulsa **Crear copia**. Una
+   copia parcial es una buena primera prueba rápida.
+2. Cuando termine, abre **Internxt Drive** y comprueba que el archivo `.tar` está
+   ahí, con su fecha y su tamaño.
+3. De vuelta en Home Assistant, la copia aparece en la ubicación WebDAV y está
+   lista para restaurar.
 
 ## Solución de problemas
 
-- **Error de configuración:** completa todos los campos obligatorios. Nunca
+- **Error de configuración:** rellena todos los campos obligatorios. Nunca
   publiques `options.json` en una incidencia.
-- **El acceso falla después de reiniciar:** sustituye el código 2FA caducado o
-  configura el secreto OTP.
-- **401 Unauthorized:** comprueba las credenciales WebDAV locales.
-- **Error de certificado:** desactiva su verificación únicamente para este
-  endpoint local autofirmado.
+- **El acceso falla tras reiniciar:** sustituye el código 2FA caducado, o
+  configura el secreto OTP para el reinicio automático.
+- **401 Unauthorized:** comprueba el usuario y la contraseña WebDAV locales.
+- **Error de certificado:** desactiva la verificación del certificado — el
+  endpoint local es autofirmado a propósito.
 - **Puerto no disponible:** revisa el puerto publicado en la sección **Red**.
-- **Sin Internet:** el proceso oficial comprueba la sesión y WebDAV cada 30
-  segundos e intenta recuperarlos.
-- **Fallo con archivos grandes:** la versión 0.0.5 limita la concurrencia de las
-  partes y reintenta conexiones transitorias. Conserva los registros de Home
-  Assistant y de la aplicación, sin datos personales, si se agotan todos los
-  reintentos.
+- **Falla la subida de una copia grande:** las subidas ya van con concurrencia
+  reducida y reintentos automáticos, así que es raro. Reintenta una vez; si
+  persiste, suele ser la red o el router local cortando ráfagas de conexiones.
+  Conserva los registros de Home Assistant y de la aplicación (sin datos
+  personales) si abres una incidencia.
 
-## Advertencias de seguridad
+## Seguridad
 
-- No expongas el puerto 3005 mediante el router ni un proxy inverso público.
+- No expongas nunca el puerto 3005 por el router ni por un proxy inverso público.
 - Home Assistant guarda las opciones en `/data/options.json`; protege el acceso
   al host y a sus copias de seguridad.
 - El secreto OTP puede permitir acceso desatendido a la cuenta de Internxt.
-- No publiques credenciales, correo de la cuenta, registros con datos
+- No incluyas credenciales, tu correo de la cuenta, registros con datos
   personales ni archivos de copia en incidencias de GitHub.

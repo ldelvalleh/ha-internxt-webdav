@@ -9,7 +9,7 @@ LABEL \
   io.hass.type="app" \
   io.hass.arch="${BUILD_ARCH}" \
   org.opencontainers.image.title="Home Assistant App: Internxt WebDAV" \
-  org.opencontainers.image.description="Experimental Home Assistant adapter for the official Internxt WebDAV server" \
+  org.opencontainers.image.description="Home Assistant app for the official Internxt WebDAV server (Internxt Drive backups)" \
   org.opencontainers.image.source="https://github.com/ldelvalleh/ha-internxt-webdav" \
   org.opencontainers.image.licenses="Apache-2.0"
 
