@@ -1,58 +1,63 @@
-# Internxt WebDAV para Home Assistant
+<p align="center">
+  <img src="internxt_webdav/logo.png" alt="Internxt WebDAV para Home Assistant" height="96">
+</p>
+
+# Internxt para Home Assistant
 
 [English](README.md) | [Español](README.es.md)
 
-Aplicación experimental para Home Assistant OS que ejecuta la imagen oficial
-[`internxt/webdav`](https://hub.docker.com/r/internxt/webdav) y adapta la
-configuración visual de Home Assistant a las variables de entorno de Internxt.
+[![Añadir repositorio a mi Home Assistant][my-ha-shield]][my-ha]
 
-El objetivo es utilizar Internxt Drive como ubicación WebDAV para las copias de
-seguridad de Home Assistant. Esta compatibilidad no se considerará confirmada
-hasta superar las pruebas de aceptación de la versión 0.1.0.
+[![Licencia: Apache 2.0][license-shield]][license]
+[![Compatible amd64][amd64-shield]](#)
+[![Compatible aarch64][aarch64-shield]](#)
+[![Mantenido][maintained-shield]][issues]
 
-> [!WARNING]
-> Este es un proyecto comunitario experimental. No es una aplicación oficial de
-> Internxt ni de Home Assistant y no está respaldada por ninguna de las dos
-> organizaciones.
+Aplicación para [Home Assistant](https://www.home-assistant.io) de [Luis del Valle][author].
 
-## Estado del spike
+## Aplicaciones
 
-La versión `0.0.5` tiene un objetivo deliberadamente limitado:
+### <img src="internxt_webdav/icon.png" alt="" height="20" align="top"> [Internxt WebDAV](./internxt_webdav) &nbsp; ![Versión][version-shield]
 
-1. Instalarse en Home Assistant OS.
-2. Arrancar el servidor WebDAV oficial de Internxt.
-3. Responder a una petición `PROPFIND` autenticada.
-4. Subir y descargar un archivo de prueba.
-5. Continuar funcionando después de reiniciar la aplicación.
+Haz copias de seguridad de Home Assistant en **[Internxt Drive](https://internxt.com)** — almacenamiento en la nube privado y cifrado de extremo a extremo. Ejecuta el servidor WebDAV oficial de Internxt dentro de la red interna de Home Assistant, listo para conectarlo con la integración WebDAV nativa y el sistema de copias integrado.
 
-Arquitecturas compatibles:
+Basada en la imagen oficial `internxt/webdav`, con un arreglo de transporte que hace que **las copias grandes suban de forma fiable** (ráfagas paralelas más pequeñas y reintentos automáticos).
 
-- `amd64`
-- `aarch64`
-
-La aplicación fija `internxt/webdav:v1.6.7`; no implementa por sí misma el
-cifrado, WebDAV ni las subidas a Internxt.
+[📖 Documentación](./internxt_webdav/DOCS.es.md) · [📝 Cambios](./internxt_webdav/CHANGELOG.md)
 
 ## Instalación
 
-Añade este repositorio a la tienda de aplicaciones de Home Assistant:
+1. Pulsa el botón **Añadir repositorio** de arriba, o ve a **Ajustes → Aplicaciones → Tienda de aplicaciones**, abre el menú **⋯** → **Repositorios** y pega:
 
-```text
-https://github.com/ldelvalleh/ha-internxt-webdav
-```
+   ```text
+   https://github.com/ldelvalleh/ha-internxt-webdav
+   ```
 
-Consulta [`internxt_webdav/DOCS.es.md`](internxt_webdav/DOCS.es.md) para ver la
-configuración, las pruebas, el funcionamiento del 2FA y las advertencias de
-seguridad.
+2. La aplicación aparece al final de la tienda: instálala, rellena tus credenciales de Internxt y las de WebDAV local, y arráncala.
+3. Conéctala a la integración WebDAV de Home Assistant y elígela como ubicación de copias. Paso a paso completo en la [documentación](./internxt_webdav/DOCS.es.md#integración-webdav-de-home-assistant).
 
 ## Seguridad
 
-- WebDAV exige credenciales locales independientes.
-- El puerto 3005 solo debe utilizarse en una red local de confianza.
-- No abras ni redirijas el puerto 3005 en el router.
-- Durante la fase experimental, utiliza una cuenta específica de Internxt.
-- Protege la contraseña y el secreto OTP como credenciales de la cuenta.
+- WebDAV usa **credenciales locales independientes**, nunca tu contraseña de Internxt.
+- El puerto 3005 es solo para tu red local de confianza. **No lo abras en el router.**
+- Mantén el **cifrado de las copias** de Home Assistant activado y guarda el kit de emergencia en lugar seguro.
+- Trata la contraseña de Internxt y el secreto OTP como credenciales de la cuenta.
+
+## Sin afiliación con Internxt ni Home Assistant
+
+Es un proyecto independiente y de código abierto. Ejecuta el software oficial de Internxt, pero no es un producto oficial de Internxt ni de Home Assistant y ninguna de las dos lo respalda.
 
 ## Licencia
 
-Apache License 2.0. Consulta [LICENSE](LICENSE).
+Apache License 2.0 © Luis del Valle. Consulta [LICENSE](LICENSE).
+
+[author]: https://github.com/ldelvalleh
+[issues]: https://github.com/ldelvalleh/ha-internxt-webdav/issues
+[license]: ./LICENSE
+[my-ha]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fldelvalleh%2Fha-internxt-webdav
+[my-ha-shield]: https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg
+[license-shield]: https://img.shields.io/badge/licencia-Apache%202.0-brightgreen.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-s%C3%AD-green.svg
+[aarch64-shield]: https://img.shields.io/badge/aarch64-s%C3%AD-green.svg
+[maintained-shield]: https://img.shields.io/badge/mantenido-s%C3%AD-brightgreen.svg
+[version-shield]: https://img.shields.io/badge/versi%C3%B3n-1.0.0-blue.svg

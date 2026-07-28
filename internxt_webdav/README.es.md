@@ -2,12 +2,15 @@
 
 [English](README.md) | [Español](README.es.md)
 
-Aplicación experimental para Home Assistant OS que arranca el contenedor
-oficial de Internxt WebDAV utilizando la configuración introducida en la
-interfaz de Home Assistant.
+Aplicación de Home Assistant que ejecuta el servidor WebDAV oficial de Internxt,
+configurado desde la interfaz de Home Assistant, para que puedas usar **Internxt
+Drive** como ubicación de las copias de seguridad del sistema integrado.
 
-Es compatible con `amd64`, `aarch64`, autenticación WebDAV local, códigos 2FA
-temporales y secretos OTP para funcionamiento desatendido.
+Compatible con `amd64` y `aarch64`, autenticación WebDAV local independiente,
+códigos 2FA temporales y secretos OTP para funcionamiento desatendido. Las copias
+grandes suben de forma fiable gracias a un arreglo de transporte multipart
+(ráfagas paralelas más pequeñas y reintentos automáticos).
 
-Este proyecto comunitario no es oficial ni está respaldado por Internxt o Home
-Assistant. Lee [DOCS.es.md](DOCS.es.md) antes de instalarlo.
+Proyecto independiente y de código abierto: ejecuta el software oficial de
+Internxt, pero no es un producto oficial de Internxt ni de Home Assistant. Lee
+[DOCS.es.md](DOCS.es.md) para empezar.

@@ -2,11 +2,14 @@
 
 [English](README.md) | [Español](README.es.md)
 
-Experimental Home Assistant OS app that starts the official Internxt WebDAV
-container with configuration supplied through the Home Assistant interface.
+Home Assistant app that runs the official Internxt WebDAV server, configured from
+the Home Assistant interface, so you can use **Internxt Drive** as a backup
+location for the built-in backup system.
 
-It supports `amd64` and `aarch64`, local WebDAV authentication, temporary 2FA
-codes, and unattended OTP secrets.
+Supports `amd64` and `aarch64`, separate local WebDAV authentication, temporary
+2FA codes, and unattended OTP secrets. Large backups upload reliably thanks to a
+multipart transport fix (smaller parallel bursts and automatic retries).
 
-This community project is not official or endorsed by Internxt or Home
-Assistant. See [DOCS.md](DOCS.md) before installing it.
+Independent open-source project — it runs Internxt's official software but is not
+an official Internxt or Home Assistant product. See [DOCS.md](DOCS.md) to get
+started.
